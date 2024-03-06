@@ -75,7 +75,9 @@ jobs:
         run: npm install
 
       - name: ⚡ Run vitest
-        run: npm run test -- --coverage  --passWithNoTests >> $GITHUB_STEP_SUMMARY
+        run: |
+            npm run test -- --coverage --passWithNoTests
+            >> $GITHUB_STEP_SUMMARY
 
   deploy:
     name: 🚀 Deploy
