@@ -1,26 +1,26 @@
 name: YAML Validation
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/*.yml'
-  pull_request:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      os:
+        required: true
+        type: string
+      node_version:
+        required: true
+        type: string
     paths:
       - '.github/workflows/*.yml'
 
 jobs:
   yaml-validation:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ inputs.node_version }}
       - name: Validate YAML
         uses: ibiqlik/action-yamllint@v3
         with:

@@ -17,6 +17,13 @@ permissions:
   contents: read
 
 jobs:
+  yaml-lint:
+    name: Yaml lint
+    uses: ./.github/workflows/yaml-validation.yml
+    with:
+        os: "ubuntu-latest"
+        node_version: "20"
+
   lint:
     name: ⬣ ESLint
     runs-on: ubuntu-latest
