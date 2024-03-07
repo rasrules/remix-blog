@@ -18,11 +18,21 @@ permissions:
 
 jobs:
   yaml-lint:
-    name: Yaml lint
-    uses: ./.github/workflows/yaml-validation.yml
-    with:
-        os: "ubuntu-latest"
-        node_version: "20"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            gaw:
+              - '.github/workflows/*.yml'
+
+      - name: Yaml lint
+        if: steps.filter.outputs.gaw == 'true'
+        uses: ./.github/workflows/yaml-validation.yml
+        with:
+          os: "ubuntu-latest"
+          node_version: "20"
 
   lint:
     name: ⬣ ESLint

@@ -9,8 +9,6 @@ on:
       node_version:
         required: true
         type: string
-    paths:
-      - '.github/workflows/*.yml'
 
 jobs:
   yaml-validation:
