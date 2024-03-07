@@ -17,8 +17,11 @@ permissions:
   contents: read
 
 jobs:
-  yaml-lint:
+  yaml-changes:
     runs-on: ubuntu-latest
+    outputs:
+        # Expose matched filters as job 'packages' output variable
+        gaw: ${{ steps.filter.outputs.yaml-changes }}
     steps:
       - uses: actions/checkout@v4  
       - uses: dorny/paths-filter@v3
@@ -28,8 +31,11 @@ jobs:
             gaw:
               - '.github/workflows/*.yml'
 
+  yaml-lint:
+    needs: yaml-changes
+    steps:
       - name: Yaml lint
-        if: steps.filter.outputs.gaw == 'true'
+        if: ${{ needs.yaml-changes.outputs.gaw == 'true' }}
         uses: ./.github/workflows/yaml-validation.yml
         with:
           os: "ubuntu-latest"
