@@ -14,11 +14,11 @@ jobs:
   yaml-validation:
     runs-on: ${{ inputs.os }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ inputs.node_version }}
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Validate YAML
         uses: ibiqlik/action-yamllint@v3
         with:
