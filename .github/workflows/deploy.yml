@@ -108,7 +108,11 @@ jobs:
 
       - name: ⚡ Run vitest
         run: |
-            npm run test -- --coverage --passWithNoTests
+            skip_tests=""
+            if [[ -z "${{ env.skip_tests }}" ]]; then
+              skip_tests="--passWithNoTests"
+            fi
+            npm run test -- --coverage "${skip_tests}" \
             >> $GITHUB_STEP_SUMMARY
 
   deploy:
