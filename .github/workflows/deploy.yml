@@ -109,7 +109,7 @@ jobs:
       - name: ⚡ Run vitest
         run: |
             skip_tests=""
-            if [[ -z "${{ env.skip_tests }}" ]]; then
+            if [[ -z "${{ env.SKIP_TESTS }}" ]]; then
               skip_tests="--passWithNoTests"
             fi
             npm run test -- --coverage "${skip_tests}" \
