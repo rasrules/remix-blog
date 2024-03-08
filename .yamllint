@@ -1,0 +1,4 @@
+extends: default
+
+rules:
+  default-yaml-spec-version: 1.2
