@@ -29,16 +29,18 @@ jobs:
         with:
           filters: |
             workflows:
-              - '.github/workflows/*.yml'
+              - '.github/workflows/**'
 
   yaml-lint:
-    name: Yaml lint
-    if: ${{ needs.yaml-changes.outputs.gaw == 'true' }}
+    runs-on: ubuntu-latest
     needs: [yaml-changes]
-    uses: ./.github/workflows/yaml-validation.yml
-    with:
-      os: "ubuntu-latest"
-      node_version: "20"
+    if: ${{ needs.yaml-changes.outputs.gaw == 'true' }}
+    steps:
+      - name: Yaml lint
+        uses: ./.github/workflows/yaml-validation.yml
+        with:
+        os: "ubuntu-latest"
+        node_version: "20"
 
   lint:
     name: ⬣ ESLint
