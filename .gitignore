@@ -12,3 +12,5 @@ node_modules
 
 #dev files
 .vscode
+
+terminal_startup.sh
