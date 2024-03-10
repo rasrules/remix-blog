@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [remix(), netlifyPlugin(), tsconfigPaths()],
   test: {
     globals: true,
-    environment: "happy-dom",
+    environment: "jsdom",
     setupFiles: ["./test/setup-test-env.ts"],
     include: ["./app/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     watchExclude: [
@@ -16,6 +16,7 @@ export default defineConfig({
         ".*\\/postgres-data\\/.*",
     ],
     coverage: {
+        //provider: 'jest',
         lines: 80,
         functions: 80,
         branches: 80,
