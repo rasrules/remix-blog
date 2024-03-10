@@ -112,7 +112,7 @@ jobs:
             if [[ -z "${{ env.SKIP_TESTS }}" ]]; then
               skip_tests="--passWithNoTests"
             fi
-            npm run test -- --coverage "${skip_tests}" \
+            npm run test:ci -- --coverage --coverageReporters="text-summary" "${skip_tests}" \
             >> $GITHUB_STEP_SUMMARY
 
   deploy:

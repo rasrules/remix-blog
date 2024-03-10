@@ -2,7 +2,7 @@
   "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "netlify-edge-plugin.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["vitest/globals"],
+    "types": ["node", "jest"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -10,6 +10,9 @@
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "target": "ES2022",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "strict": true,
     "allowJs": true,
     "skipLibCheck": true,
