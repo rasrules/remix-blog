@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom"; // So we can use toBeInTheDocument assertion
-import { loader } from "./routes/healthcheck";
+import { loader } from "./healthcheck";
 
 it("should show OK message", async () => {
   const testOkMessage = "OK";
