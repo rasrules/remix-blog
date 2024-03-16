@@ -14,7 +14,7 @@ export async function checkNotionServiceState(): Promise<Response> {
       method: "GET",
     });
     const data = await htmlResponse.text();
-    verifyStatusResponse(data);
+    verifyStatusResponse(data, STATUS_TAG, SPAN_CLASSES, STATUS_TEXT);
     return new Response("OK");
   } catch (error: unknown) {
     console.log("healthcheck ❌", { error });
@@ -22,14 +22,19 @@ export async function checkNotionServiceState(): Promise<Response> {
   }
 }
 
-export const verifyStatusResponse = (htmlData: string) => {
+export const verifyStatusResponse = (
+  htmlData: string,
+  tagToFind: string,
+  tagClasses: string,
+  textToFind: string,
+) => {
   const html = parse(htmlData);
   const result = html
-    .getElementsByTagName(STATUS_TAG)
+    .getElementsByTagName(tagToFind)
     .filter(
-      (elem) => elem.rawTagName === "span" && elem.classNames === SPAN_CLASSES,
+      (elem) => elem.rawTagName === tagToFind && elem.classNames === tagClasses,
     );
   const statusSpanText = result[0]?.text;
-  if (!statusSpanText?.includes(STATUS_TEXT))
+  if (!statusSpanText?.includes(textToFind))
     throw Error("Notion services invalid state");
 };
