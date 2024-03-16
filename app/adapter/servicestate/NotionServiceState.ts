@@ -6,7 +6,6 @@ import {
   STATUS_TAG,
 } from "./NotionServiceConstants";
 
-//global.DOMParser = new JSDOM().window.DOMParser;
 export async function checkNotionServiceState(): Promise<Response> {
   try {
     // if we can connect to the database and make a simple query
