@@ -1,9 +1,13 @@
 import { verifyStatusResponse } from "./NotionServiceState";
-import { SPAN_CLASSES, STATUS_TEXT } from "./NotionServiceConstants";
+import {
+  SPAN_CLASSES,
+  STATUS_TEXT,
+  STATUS_TAG,
+} from "./NotionServiceConstants";
 
 it("should finish OK", () => {
   expect(() => {
-    const htmlText: string = `<html><body><p class='${SPAN_CLASSES}'>${STATUS_TEXT}</p></body>`;
+    const htmlText: string = `<html><body><${STATUS_TAG} class='${SPAN_CLASSES}'>${STATUS_TEXT}</${STATUS_TAG}></body>`;
     verifyStatusResponse(htmlText);
   }).not.toThrow(Error);
 });

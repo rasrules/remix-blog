@@ -1,8 +1,12 @@
 import fetch from "cross-fetch";
-import { JSDOM } from "jsdom";
-import { SPAN_CLASSES, STATUS_TEXT } from "./NotionServiceConstants";
+import { parse } from "node-html-parser";
+import {
+  SPAN_CLASSES,
+  STATUS_TEXT,
+  STATUS_TAG,
+} from "./NotionServiceConstants";
 
-global.DOMParser = new JSDOM().window.DOMParser;
+//global.DOMParser = new JSDOM().window.DOMParser;
 export async function checkNotionServiceState(): Promise<Response> {
   try {
     // if we can connect to the database and make a simple query
@@ -20,9 +24,13 @@ export async function checkNotionServiceState(): Promise<Response> {
 }
 
 export const verifyStatusResponse = (htmlData: string) => {
-  const html = new DOMParser().parseFromString(htmlData, "text/html");
-  const statusSpanText =
-    html.documentElement.getElementsByClassName(SPAN_CLASSES)[0].textContent;
+  const html = parse(htmlData);
+  const result = html
+    .getElementsByTagName(STATUS_TAG)
+    .filter(
+      (elem) => elem.rawTagName === "span" && elem.classNames === SPAN_CLASSES,
+    );
+  const statusSpanText = result[0]?.text;
   if (!statusSpanText?.includes(STATUS_TEXT))
     throw Error("Notion services invalid state");
 };
