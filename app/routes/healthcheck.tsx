@@ -1,8 +1,7 @@
-import { createServiceStateAdapter } from "../useCases/checkServiceState/ServiceStateAdapter";
+import { checkServiceStatus } from "../useCases/checkServiceState";
 
 export const loader = async (
   param: { create(): Promise<Response> } | undefined,
 ) => {
-  const checkServiceStatus = createServiceStateAdapter(param);
-  return await checkServiceStatus();
+  return await checkServiceStatus(param);
 };

@@ -4,12 +4,18 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import { netlifyPlugin } from "@netlify/remix-adapter/plugin";
 
 export default defineConfig({
-  plugins: [remix(), netlifyPlugin(), tsconfigPaths()],
+  plugins: [
+    remix({
+      ignoredRouteFiles: ["**/*.test.{js,ts,jsx,tsx}"],
+      serverModuleFormat: "esm",
+    }),
+    netlifyPlugin(), tsconfigPaths()
+  ],
   test: {
     globals: true,
     environment: "jsdom",
     setupFiles: ["./test/setup-test-env.ts"],
-    include: ["./app/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    include: ["app/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     watchExclude: [
         ".*\\/node_modules\\/.*",
         ".*\\/build\\/.*",

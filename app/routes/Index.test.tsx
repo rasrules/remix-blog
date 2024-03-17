@@ -1,6 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import Index from "./routes/_index";
 import "@testing-library/jest-dom"; // So we can use toBeInTheDocument assertion
+import { render, screen } from "@testing-library/react";
+import Index from "./_index";
 
 it("should show welcome message", () => {
   render(<Index />);

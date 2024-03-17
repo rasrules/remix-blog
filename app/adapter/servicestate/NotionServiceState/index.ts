@@ -1,8 +1,11 @@
 import fetch from "cross-fetch";
-import { JSDOM } from "jsdom";
-import { SPAN_CLASSES, STATUS_TEXT } from "./NotionServiceConstants";
+import { parse } from "node-html-parser";
+import {
+  SPAN_CLASSES,
+  STATUS_TEXT,
+  STATUS_TAG,
+} from "./NotionServiceConstants";
 
-global.DOMParser = new JSDOM().window.DOMParser;
 export async function checkNotionServiceState(): Promise<Response> {
   try {
     // if we can connect to the database and make a simple query
@@ -11,7 +14,7 @@ export async function checkNotionServiceState(): Promise<Response> {
       method: "GET",
     });
     const data = await htmlResponse.text();
-    verifyStatusResponse(data);
+    verifyStatusResponse(data, STATUS_TAG, SPAN_CLASSES, STATUS_TEXT);
     return new Response("OK");
   } catch (error: unknown) {
     console.log("healthcheck ❌", { error });
@@ -19,10 +22,19 @@ export async function checkNotionServiceState(): Promise<Response> {
   }
 }
 
-export const verifyStatusResponse = (htmlData: string) => {
-  const html = new DOMParser().parseFromString(htmlData, "text/html");
-  const statusSpanText =
-    html.documentElement.getElementsByClassName(SPAN_CLASSES)[0].textContent;
-  if (!statusSpanText?.includes(STATUS_TEXT))
+export const verifyStatusResponse = (
+  htmlData: string,
+  tagToFind: string,
+  tagClasses: string,
+  textToFind: string,
+) => {
+  const html = parse(htmlData);
+  const result = html
+    .getElementsByTagName(tagToFind)
+    .filter(
+      (elem) => elem.rawTagName === tagToFind && elem.classNames === tagClasses,
+    );
+  const statusSpanText = result[0]?.text;
+  if (!statusSpanText?.includes(textToFind))
     throw Error("Notion services invalid state");
 };
