@@ -1,4 +1,4 @@
-import { verifyStatusResponse } from "./NotionServiceState";
+import { verifyStatusResponse } from ".";
 
 it("should finish OK", () => {
   expect(() => {
