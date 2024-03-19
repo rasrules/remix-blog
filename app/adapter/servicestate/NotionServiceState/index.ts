@@ -1,10 +1,17 @@
 import fetch from "cross-fetch";
 import { parse } from "node-html-parser";
+import type { ParseParametersDictionary } from "../types";
 import {
   SPAN_CLASSES,
   STATUS_TEXT,
   STATUS_TAG,
 } from "./NotionServiceConstants";
+
+const NotionParseParameters: ParseParametersDictionary = {
+  tagToFind: STATUS_TAG,
+  tagClasses: SPAN_CLASSES,
+  textToFind: STATUS_TEXT,
+};
 
 export async function checkNotionServiceState(): Promise<Response> {
   try {
@@ -14,7 +21,7 @@ export async function checkNotionServiceState(): Promise<Response> {
       method: "GET",
     });
     const data = await htmlResponse.text();
-    verifyStatusResponse(data, STATUS_TAG, SPAN_CLASSES, STATUS_TEXT);
+    verifyStatusResponse(data, NotionParseParameters);
     return new Response("OK");
   } catch (error: unknown) {
     console.log("healthcheck ❌", { error });
@@ -24,11 +31,10 @@ export async function checkNotionServiceState(): Promise<Response> {
 
 export const verifyStatusResponse = (
   htmlData: string,
-  tagToFind: string,
-  tagClasses: string,
-  textToFind: string,
+  parameters: ParseParametersDictionary,
 ) => {
   const html = parse(htmlData);
+  const { tagToFind, tagClasses, textToFind } = parameters;
   const result = html
     .getElementsByTagName(tagToFind)
     .filter(

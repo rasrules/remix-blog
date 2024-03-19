@@ -1,18 +1,27 @@
 import { verifyStatusResponse } from ".";
+import { ParseParametersDictionary } from "../types";
 
 it("should finish OK", () => {
   expect(() => {
-    const tag = "p";
-    const text = "ID1";
-    const classes = "myclass other";
-    const htmlText: string = `<html><body><${tag} class='${classes}'>${text}</${tag}></body>`;
-    verifyStatusResponse(htmlText, tag, classes, text);
+    const parameters: ParseParametersDictionary = {
+      tagToFind: "p",
+      textToFind: "ID1",
+      tagClasses: "myclass other",
+    };
+    const htmlText: string = `<html><body><${parameters.tagToFind} class='${parameters.tagClasses}'>\
+    ${parameters.textToFind}</${parameters.tagToFind}></body>`;
+    verifyStatusResponse(htmlText, parameters);
   }).not.toThrow(Error);
 });
 
 it("should throw error", () => {
   expect(() => {
+    const parameters: ParseParametersDictionary = {
+      tagToFind: "div",
+      textToFind: "none",
+      tagClasses: "some value",
+    };
     const htmlText: string = "<html><body><p class='test'>Test Text</p></body>";
-    verifyStatusResponse(htmlText, "div", "none", "some value");
+    verifyStatusResponse(htmlText, parameters);
   }).toThrow(Error);
 });
