@@ -35,6 +35,9 @@ export default function Index() {
             Remix Docs
           </a>
         </li>
+        <li>
+          Raul details of contact
+        </li>        
       </ul>
       <p>Footer</p>
     </div>
