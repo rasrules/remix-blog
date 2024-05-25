@@ -35,6 +35,11 @@ export default function Index() {
             Remix Docs
           </a>
         </li>
+        <li>
+          <a target="_blank" href="#" rel="noreferrer">
+            Raul details of contact
+          </a>
+        </li>        
       </ul>
       <p>Footer</p>
     </div>
