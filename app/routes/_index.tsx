@@ -36,9 +36,7 @@ export default function Index() {
           </a>
         </li>
         <li>
-          <a target="_blank" href="#" rel="noreferrer">
-            Raul details of contact
-          </a>
+          Raul details of contact
         </li>        
       </ul>
       <p>Footer</p>
