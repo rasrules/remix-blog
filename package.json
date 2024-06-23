@@ -28,7 +28,7 @@
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
-        "@remix-run/dev": "^2.8.0",
+        "@remix-run/dev": "^2.9.0",
         "@swc/core": "^1.4.5",
         "@swc/jest": "^0.2.36",
         "@testing-library/jest-dom": "^6.4.2",
