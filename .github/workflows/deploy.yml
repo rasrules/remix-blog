@@ -6,6 +6,7 @@ name: 🚀 Deploy
     branches:
       - main
   pull_request:
+    types: [opened, edited, reopened, synchronize]
     branches:
       - main
 
@@ -109,6 +110,7 @@ jobs:
       - name: ⚡ Run vitest
         run: |
             skip_tests=""
+            echo "${{github.event.action}}"
             if [[ -z "${{ env.SKIP_TESTS }}" ]]; then
               skip_tests="--passWithNoTests"
             fi
