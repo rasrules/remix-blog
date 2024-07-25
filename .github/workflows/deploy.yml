@@ -109,6 +109,7 @@ jobs:
       - name: ⚡ Run vitest
         run: |
             skip_tests=""
+            echo "${{github.event.action}}"
             if [[ -z "${{ env.SKIP_TESTS }}" ]]; then
               skip_tests="--passWithNoTests"
             fi
